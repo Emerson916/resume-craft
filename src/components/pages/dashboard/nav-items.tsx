@@ -22,7 +22,7 @@ export const NavItems = () => {
   return (
     <nav className="w-full flex flex-col gap-2 px-2 py-4">
       {navItems?.map((item) => {
-        const isActive = pathname.startsWith(item.path);
+        const isActive = pathname?.startsWith(item.path);
         return (
           <Link key={item.path} href={item.path}>
             <Button
