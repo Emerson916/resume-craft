@@ -25,30 +25,42 @@ export const ResumePage = () => {
         phone: "",
         website: "",
       },
-      //   certifications: [],
-      //   educations: [],
-      //   experiences: [],
-      //   languages: [],
-      //   projects: [],
-      //   skills: [],
-      //   socialMedias: [],
-      // },
-      // structure: {
-      //   template: "ditto",
-      //   colorTheme: "slate",
-      //   language: "portuguese",
-      //   layout: {
-      //     mainSections: [
-      //       { key: "socialMedias" },
-      //       { key: "summary" },
-      //       { key: "experiences" },
-      //       { key: "educations" },
-      //       { key: "certifications" },
-      //       { key: "projects" },
-      //     ],
-      //     sidebarSections: [{ key: "languages" }, { key: "skills" }],
-      //   },
+      certifications: [],
+      educations: [],
+      experiences: [],
+      languages: [],
+      projects: [],
+      skills: [],
+      socialMedias: [
+        {
+          icon: "",
+          name: "test 1",
+          url: "test1",
+          username: "teste 1",
+        },
+        {
+          icon: "",
+          name: "test 1",
+          url: "test1",
+          username: "teste 1",
+        },
+      ],
     },
+    // structure: {
+    //   template: "ditto",
+    //   colorTheme: "slate",
+    //   language: "portuguese",
+    //   layout: {
+    //     mainSections: [
+    //       { key: "socialMedias" },
+    //       { key: "summary" },
+    //       { key: "experiences" },
+    //       { key: "educations" },
+    //       { key: "certifications" },
+    //       { key: "projects" },
+    //     ],
+    //     sidebarSections: [{ key: "languages" }, { key: "skills" }],
+    //   },
   };
 
   const methods = useForm<ResumeData>({ defaultValues });
