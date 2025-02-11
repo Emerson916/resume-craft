@@ -10,9 +10,9 @@ type FieldWrapperProps = {
   error?: FieldError;
 };
 
-export const FieldWrapper = ({ label, children }: FieldWrapperProps) => {
+export const FieldWrapper = ({ label, children, className }: FieldWrapperProps) => {
   return (
-    <div className={cn("flex flex-col gap-2")}>
+    <div className={cn("flex flex-col gap-2", className)}>
       <Label>{label}</Label>
       {children}
     </div>
