@@ -28,7 +28,7 @@ export const Dialog = ({children, title, description, content, open, setOpen}: D
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
+          <DialogDescription>{description || ""}</DialogDescription>
         </DialogHeader>
         {content}
       </DialogContent>

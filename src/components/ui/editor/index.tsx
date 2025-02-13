@@ -36,6 +36,7 @@ export const Editor = ({ value, onChange, className }: EditorProps) => {
       attributes: {
         class: "focus:outline-none h-full p-4",
       },
+      
     },
     onCreate({ editor }) {
       onChange?.(editor.getHTML());
@@ -43,6 +44,7 @@ export const Editor = ({ value, onChange, className }: EditorProps) => {
     onUpdate({ editor }) {
       onChange?.(editor.getHTML());
     },
+    immediatelyRender: false,
     autofocus: false,
   });
   return (

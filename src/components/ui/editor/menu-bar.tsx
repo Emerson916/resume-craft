@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { Button } from "../button";
 import { Tooltip } from "../tooltip";
-// import { Tooltip } from "../tooltip";
 
 type MenuBarProps = {
   editor: Editor | null;

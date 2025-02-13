@@ -31,20 +31,7 @@ export const ResumePage = () => {
       languages: [],
       projects: [],
       skills: [],
-      socialMedias: [
-        {
-          icon: "",
-          name: "test 1",
-          url: "test1",
-          username: "teste 1",
-        },
-        {
-          icon: "",
-          name: "test 1",
-          url: "test1",
-          username: "teste 1",
-        },
-      ],
+      socialMedias: [],
     },
     // structure: {
     //   template: "ditto",
@@ -75,7 +62,7 @@ export const ResumePage = () => {
 
           <ResizableHandle withHandle />
 
-          <ResizablePanel>
+          <ResizablePanel defaultSize={45}>
             <ResumeContent />
           </ResizablePanel>
 

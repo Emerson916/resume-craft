@@ -1,4 +1,4 @@
-import { GripVertical, LucideIcon } from "lucide-react";
+import { GripVertical, LucideIcon, Plus } from "lucide-react";
 import { SectionTitle } from "../section-title";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import {
@@ -8,6 +8,8 @@ import {
   Droppable,
 } from "@hello-pangea/dnd";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Tooltip } from "@/components/ui/tooltip";
 export type ResumeArrayKeys = Exclude<
   keyof ResumeContentData,
   "image" | "infos" | "summary"
@@ -44,11 +46,26 @@ export const MultipleDragList = ({
 
     move(source.index, destination.index);
   };
+
+  const isEmpty = fields.length === 0;
   return (
     <div>
       <SectionTitle title={data.title} icon={data.icon} />
 
       <div className="mt-4 flex flex-col">
+        {isEmpty && (
+          <Button
+            variant={"outline"}
+            className="w-full gap-2"
+            onClick={() => {
+              onAdd();
+            }}
+          >
+            <Plus size={16} />
+            Adicionar Item
+          </Button>
+        )}
+
         {!!fields.length && (
           <DragDropContext onDragEnd={handleDrag}>
             <Droppable droppableId={`droppable-${data.formKey}`}>
@@ -59,10 +76,11 @@ export const MultipleDragList = ({
                   className="rounded overflow-hidden border border-muted"
                 >
                   {fields?.map((field, index) => {
-                    const titleKey = data.titleKey as keyof typeof field
-                    const descriptionKey = data.descriptionKey as keyof typeof field
+                    const titleKey = data.titleKey as keyof typeof field;
+                    const descriptionKey =
+                      data.descriptionKey as keyof typeof field;
 
-                    const isLastItem = index == fields.length - 1
+                    const isLastItem = index == fields.length - 1;
                     return (
                       <Draggable
                         key={`draggable-item-${data.formKey}-${index}`}
@@ -74,7 +92,10 @@ export const MultipleDragList = ({
                             key={field.id}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className={cn("h-16 w-full bg-muted/50 flex", !isLastItem && "border-b border-muted")}
+                            className={cn(
+                              "h-16 w-full bg-muted/50 flex",
+                              !isLastItem && "border-b border-muted"
+                            )}
                           >
                             <div
                               {...provided.dragHandleProps}
@@ -82,14 +103,19 @@ export const MultipleDragList = ({
                             >
                               <GripVertical size={14} />
                             </div>
-                            <div className="flex-1 flex flex-col justify-center px-3 cursor-pointer hover:bg-muted/80 transition-all">
-                              <p className="text-sm font-title font-bold">
-                                {field[titleKey]}
-                              </p>
-                              <p className="text-sm text-muted-foreground">
-                                {field[descriptionKey]}
-                              </p>
-                            </div>
+                            <Tooltip content={"Clique para editar"}>
+                              <div
+                                className="flex-1 flex flex-col justify-center px-3 cursor-pointer hover:bg-muted/80 transition-all"
+                                onClick={() => onEdit(index)}
+                              >
+                                <p className="text-sm font-title font-bold">
+                                  {field[titleKey]}
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                  {field[descriptionKey]}
+                                </p>
+                              </div>
+                            </Tooltip>
                           </div>
                         )}
                       </Draggable>
@@ -100,6 +126,19 @@ export const MultipleDragList = ({
               )}
             </Droppable>
           </DragDropContext>
+        )}
+
+        {!isEmpty && (
+          <Button
+            variant={"outline"}
+            className="w-max gap-2 ml-auto mt-4"
+            onClick={() => {
+              onAdd();
+            }}
+          >
+            <Plus size={16} />
+            Adicionar Item
+          </Button>
         )}
       </div>
     </div>
