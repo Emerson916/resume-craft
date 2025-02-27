@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -8,17 +9,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { LogOut, SquareUser } from "lucide-react";
+import { User } from "next-auth";
+import {signOut} from "next-auth/react"
 
-export const UserDropdown = () => {
+type UserDropdownProps = {
+  user?: User;
+};
+
+export const UserDropdown = ({ user }: UserDropdownProps) => {
+  if (!user) return null;
+
+  const initials = user?.name
+    ?.split(" ")
+    ?.slice(0, 2)
+    .map((name) => name[0])
+    .join("");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="w-full gap-2 justify-start px-2">
           <Avatar className="w-7 h-7 block">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={user?.image ?? ""} />
+            <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
-          <p>Emerson Silva</p>
+          <p>{user?.name}</p>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -31,11 +45,11 @@ export const UserDropdown = () => {
             Configuração de Conta
           </DropdownMenuItem>
         </Link>
-        <DropdownMenuItem className="gap-2 text-red-500">
-            <DropdownMenuItem>
+        <DropdownMenuItem className="gap-2 text-red-500" onClick={() => {signOut({ callbackUrl: "/auth/login"})}}>
+          <DropdownMenuItem>
             <LogOut size={16} />
             Sair
-            </DropdownMenuItem>
+          </DropdownMenuItem>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
