@@ -6,11 +6,11 @@ import Link from "next/link";
 // import { DuplicateResumeDialog } from "./duplicate-resume-dialog";
 // import { useResumeDownload } from "@/hooks/use-resume-download";
 
-// type NavigationHeaderProps = {
-//   title: string;
-// };
+type NavigationHeaderProps = {
+  title: string;
+};
 
-export const NavigationHeader = () => {
+export const NavigationHeader = ({title}: NavigationHeaderProps) => {
 //   const { handleDownloadResume, isLoading } = useResumeDownload(title);
 
   return (
@@ -30,7 +30,7 @@ export const NavigationHeader = () => {
 
         <span className="text-muted-foreground">/</span>
 
-        <p className="text-lg font-title font-bold ml-1">Título</p>
+        <p className="text-lg font-title font-bold ml-1">{title}</p>
       </div>
 
       <div className="flex gap-1">
