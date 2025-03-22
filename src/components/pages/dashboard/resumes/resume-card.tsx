@@ -41,7 +41,7 @@ type ResumeCardProps = {
 export const ResumeCard = ({resume}: ResumeCardProps) => {
   const formattedLastUpdate = formatDistanceToNow(new Date(resume.updatedAt), {addSuffix: true})
   return (
-    <Link href={`/dashboard/resumes/${resume.id}}`} className="block w-full">
+    <Link href={`/dashboard/resumes/${resume.id}`} className="block w-full">
       <ResumeCardButton
         title={resume.title}
         description={`Última atualização ${formattedLastUpdate}`}

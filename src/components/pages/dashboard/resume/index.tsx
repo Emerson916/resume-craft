@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -9,21 +10,23 @@ import { ResumeContent } from "./resume-content";
 import { StructureSidebar } from "./structure-sidebar";
 import { FormProvider, useForm } from "react-hook-form";
 import { User } from "next-auth";
-import { useDebounce } from "@/hooks/use-debounce";
 import { useCallback, useEffect, useRef } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
 import { updateResumeData } from "@/db/actions";
 import { useParams } from "next/navigation";
-import {mergician} from "mergician";
+import { mergician } from "mergician";
 
 type ResumePageProps = {
   title: string;
   initialData: Partial<ResumeData>;
-  user?: User
-}
+  user?: User;
+};
 
-export const ResumePage = ({title, initialData, user}: ResumePageProps) => {
-  const params = useParams()
+export const ResumePage = ({ title, initialData, user }: ResumePageProps) => {
+  const params = useParams();
+
   const resumeId = params.id as string;
+
   const defaultValues: ResumeData = {
     content: {
       summary: "<p></p>",
@@ -62,13 +65,15 @@ export const ResumePage = ({title, initialData, user}: ResumePageProps) => {
         ],
         sidebarSections: [{ key: "languages" }, { key: "skills" }],
       },
-    }
+    },
   };
 
-  const methods = useForm<ResumeData>({ defaultValues: mergician(defaultValues, initialData) });
+  const methods = useForm<ResumeData>({
+    defaultValues: mergician(defaultValues, initialData),
+  });
 
   const data = methods.watch();
-  const debouncedData = useDebounce(data)
+  const debouncedData = useDebounce(JSON.stringify(data));
 
   const shouldSave = useRef(false);
 
@@ -79,17 +84,17 @@ export const ResumePage = ({title, initialData, user}: ResumePageProps) => {
         return;
       }
 
-      const updatedData = methods.getValues()
+      const updatedData = methods.getValues();
 
-      updateResumeData(resumeId, updatedData)
+      updateResumeData(resumeId, updatedData);
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
-  }, [methods])
+  }, [methods, resumeId]);
 
   useEffect(() => {
-    console.log("teste")
-  }, [debouncedData, handleSaveUpdates])
+    handleSaveUpdates();
+  }, [debouncedData, handleSaveUpdates]);
 
   return (
     <FormProvider {...methods}>
@@ -98,13 +103,11 @@ export const ResumePage = ({title, initialData, user}: ResumePageProps) => {
           <ResizablePanel minSize={20} maxSize={40} defaultSize={30}>
             <InfosSidebar />
           </ResizablePanel>
-
           <ResizableHandle withHandle />
 
-          <ResizablePanel defaultSize={45}>
-            <ResumeContent title={title}/>
+          <ResizablePanel>
+            <ResumeContent title={title} />
           </ResizablePanel>
-
           <ResizableHandle withHandle />
 
           <ResizablePanel minSize={20} maxSize={35} defaultSize={25}>
