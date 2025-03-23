@@ -24,7 +24,7 @@ export const ResumeContent = ({title}: ResumeContentProps) => {
                 limitToBounds={false}
             >
                 <NavigationHeader title={title}/>
-                <TransformControls />
+                <TransformControls title={title}/>
                 <TransformComponent>
                     <ResumeTemplate data={data}/>
                 </TransformComponent>
