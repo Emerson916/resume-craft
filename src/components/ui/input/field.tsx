@@ -1,13 +1,14 @@
 import { ComponentProps, ReactNode } from "react";
 import { Input } from ".";
 import { FieldWrapper } from "../field-wrapper";
-import { Controller, useFormContext } from "react-hook-form";
+import { Control, Controller, useFormContext } from "react-hook-form";
 
 type InputFieldProps = ComponentProps<typeof Input> & {
   label: string;
   name: string;
   containerClassName?: string
   extraContent?: (value: string) => ReactNode;
+  control?: Control<any, any>
 };
 
 export const InputField = ({
@@ -16,13 +17,14 @@ export const InputField = ({
   required,
   containerClassName,
   extraContent,
+  control: customControl,
   ...props
 }: InputFieldProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
-      control={control}
+      control={customControl ?? control}
       name={name}
       rules={{ required: required && "Campo obrigatório" }}
       render={({ field, fieldState }) => (

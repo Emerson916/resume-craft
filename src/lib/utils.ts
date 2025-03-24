@@ -44,3 +44,11 @@ export const formatTailwindHTML = (
     </html>
   `
 }
+
+export const isValidJSON = (json: string) => {
+  try {
+    JSON.parse(json)
+  } catch (error) {
+    return false
+  }
+}
