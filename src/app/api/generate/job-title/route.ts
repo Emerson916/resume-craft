@@ -2,7 +2,7 @@
 // import { getUserCredits } from "@/db/queries";
 // import { openai } from "@/lib/openai";
 // import { isValidJSON } from "@/lib/utils";
-import { openai } from "@/lib/openia";
+import { openai } from "@/lib/openai";
 import { isValidJSON } from "@/lib/utils";
 import { z } from "zod";
 
