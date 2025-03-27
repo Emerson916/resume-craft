@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import Stripe from "stripe";
 // import Stripe from "stripe";
 
 type ResumeDownloadPayload = {
@@ -47,10 +48,10 @@ const getCredits = async () => {
   return data?.credits ?? 0;
 }
 
-// const getPackages = async () => {
-//   const { data } = await api.get<Stripe.Price[]>("/credits/packages");
-//   return data;
-// }
+const getPackages = async () => {
+  const { data } = await api.get<Stripe.Price[]>("/credits/packages");
+  return data;
+}
 
 const getCheckoutUrl = async (priceId: string, currentPathname: string) => {
   const { data } = await api.post<{ url: string }>("/credits/packages/checkout", { priceId, currentPathname });
@@ -70,7 +71,7 @@ export const ApiService = {
   fixContent,
   translate,
   getCredits,
-//   getPackages,
+  getPackages,
   getCheckoutUrl,
   getPortalUrl,
 };

@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm"
 import {cache} from "react"
 import { db } from "./drizzle"
 import { ResumeDto } from "./types"
-import { resumes } from "./schema"
+import { resumes, users } from "./schema"
 
 export const getResumes = cache(async (): Promise<ResumeDto[]> => {
     const session = await auth()
@@ -34,3 +34,17 @@ export const getResumeById = cache(
       return resume;
     }
   );
+
+  export const getUserCredits = cache(async () => {
+    const session = await auth();
+  
+    const userId = session?.user?.id;
+  
+    if (!userId) return 0;
+  
+    const user = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+    });
+  
+    return user?.credits ?? 0;
+  });
