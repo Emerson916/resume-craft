@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ApiService } from "@/services/api";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { languagesOptions } from "../../../structure-sidebar/sections/language";
 import { mergician } from "mergician";
-// import { queryKeys } from "@/constants/query-keys";
+import { queryKeys } from "@/constants/query-keys";
 
 type FormData = {
   language: ResumeLanguages;
@@ -30,7 +30,7 @@ export const GenerateTranslation = ({ onClose }: GenerateTranslationProps) => {
   } = useForm<FormData>();
   const { setValue, getValues } = useFormContext<ResumeData>();
 
-  //   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate: handleGenerate, isPending } = useMutation({
     mutationFn: ApiService.translate,
@@ -48,7 +48,7 @@ export const GenerateTranslation = ({ onClose }: GenerateTranslationProps) => {
 
       toast.success("Conteúdo gerado com sucesso!");
 
-      //   queryClient.invalidateQueries({ queryKey: queryKeys.credits });
+      queryClient.invalidateQueries({ queryKey: queryKeys.credits });
 
       onClose();
     },

@@ -22,10 +22,25 @@ import { ApiService } from "@/services/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { queryKeys } from "@/constants/query-keys";
 import { BuyCreditsDialog } from "./generation-dialog/buy-credits-dialog";
+import { toast } from "sonner";
 
 export const AIGenerationDropdown = () => {
   const [generationMode, setGenerationMode] = useState<AIGenerationMode | null>(null);
   const [showCreditsDialog, setShowCreditsDialog] = useState(false)
+
+  const onAction = (mode: AIGenerationMode) => {
+    if (!credits) {
+      toast.error("Você não tem créditos suficientes para realizar esta ação.", {
+        action: {
+          label: "Comprar créditos",
+          onClick: () => setShowCreditsDialog(true),
+        }
+      });
+      return;
+    }
+
+    setGenerationMode(mode);
+  }
 
   const actions = [
     {
@@ -36,17 +51,17 @@ export const AIGenerationDropdown = () => {
     {
       label: "Gerar conteúdo para vaga de emprego",
       icon: BriefcaseBusiness,
-        onClick: () => setGenerationMode("JOB_TITLE"),
+        onClick: () => onAction("JOB_TITLE"),
     },
     {
       label: "Melhorar e corrigir conteúdo existente",
       icon: PencilLine,
-        onClick: () => setGenerationMode("FIX_CONTENT"),
+        onClick: () => onAction("FIX_CONTENT"),
     },
     {
       label: "Traduzir conteúdo existente",
       icon: Languages,
-        onClick: () => setGenerationMode("TRANSLATE_CONTENT"),
+        onClick: () => onAction("TRANSLATE_CONTENT"),
     },
   ];
 
